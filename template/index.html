@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ title }}</title>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,600italic,700italic,300,400,800' rel='stylesheet' type='text/css'>
+    <link href="./style.css" rel="stylesheet" />
+</head>
+<body>
+    <h1 id="title">{{title}}</h1>
+
+    <table class="cal" border="1">
+        <thead>
+            <tr>
+            {% for header in headers %}
+                {% if header is equalto 1 %}
+                <th scope="col" title="{{ header }}">{{ header }}</th>
+                {% elif header is number and header is divisibleby 5 %}
+                <th scope="col" title="{{ header }}">{{ header }}</th>
+                {% else %}
+                <th scope="col" title="{{ header }}"></th>
+                {% endif %}
+            {% endfor %}
+            </tr>
+        </thead>
+        {% for year in years %}
+            <tr>
+                {% if year['index'] is equalto 0 %}
+                <td scope='row' title="{{ year['year'] }}">{{ year['index'] }}</td>
+                {% elif year['index'] is divisibleby 5 %}
+                <td scope='row' title="{{ year['year'] }}">{{ year['index'] }}</td>
+                {% else %}
+                <td scope='row' title="{{ year['year'] }}"></td>
+                {% endif %}
+                {% for week in year['weeks'] %}
+                    {% if week.has_range() %}
+                <td title="{{week.range}}" class="{{week.id_}}">{{week}}</td>
+                    {% else %}
+                <td>{{ week }} </td>
+                    {% endif %}
+                {% endfor %}
+            </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
